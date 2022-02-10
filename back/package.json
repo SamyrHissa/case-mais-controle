@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    
     "dev": "cls && ts-node-dev ./src/index.ts",
     "start": "cls && tsc && node ./build/index.js",
-    "test": "echo \"Running tests...\" && node ./node_modules/jest/bin/jest.js",
+    "test": "cls && echo \"Running tests...\" && node ./node_modules/jest/bin/jest.js",
     "migrations": "ts-node ./src/data/migrations/migrations.ts"
   },
   "keywords": [],
