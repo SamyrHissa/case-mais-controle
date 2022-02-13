@@ -4,7 +4,9 @@ export interface IMessageAlertStop {
     price: number,
     priceEspected: number
 }
-export interface IAlertAcoes {
-    alertStopMin(message: IMessageAlertStop): Promise<void>;
-    alertStopMax(message: IMessageAlertStop): Promise<void>;
+
+export interface IServices {
+    alertStopMin(message: IMessageAlertStop): Promise<boolean>;
+    alertStopMax(message: IMessageAlertStop): Promise<boolean>;
+    queryService(URL: string, symbol: string): Promise<number>;
 }
