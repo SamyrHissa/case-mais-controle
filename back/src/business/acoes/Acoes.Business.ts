@@ -28,13 +28,13 @@ export default class AcoesBusiness implements acoesInterface {
             let price = await this.services
                 .queryService(`https://api.hgbrasil.com/finance/stock_price?key=${process.env.ACCESS_KEY_HGBRASIL}&symbol=${symbol}`, symbol);
             if(price >= maxPrice){
-                stop = await this.services.alertStopMax({
+                stop = await this.services.notificationStopMax({
                     stocks: symbol,
                     price,
                     priceEspected: maxPrice
                 });
             } else if(price <= minPrice) {
-                stop = await this.services.alertStopMin({
+                stop = await this.services.notificationStopMin({
                     stocks: symbol,
                     price,
                     priceEspected: minPrice

@@ -10,7 +10,7 @@ export default class AcoesController {
         try {
             const {symbol, minPrice, maxPrice} = req.body;
             const acao = await new AcoesBusiness(new Services()).monitora(symbol, minPrice, maxPrice);
-            res.status(200).send('Olá')
+            res.status(200).send('Monitoramento ativado com sucesso!')
         } catch (error: any) {
             res.status(error.code).send({ message: error.message });
         }
