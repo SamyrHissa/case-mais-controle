@@ -6,7 +6,7 @@ export interface IMessageAlertStop {
 }
 
 export interface IServices {
-    alertStopMin(message: IMessageAlertStop): Promise<boolean>;
-    alertStopMax(message: IMessageAlertStop): Promise<boolean>;
+    notificationStopMin(message: IMessageAlertStop): Promise<boolean>;
+    notificationStopMax(message: IMessageAlertStop): Promise<boolean>;
     queryService(URL: string, symbol: string): Promise<number>;
 }

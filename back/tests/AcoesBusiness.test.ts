@@ -29,7 +29,7 @@ describe("Testando o monitoramento", ()=>{
         expect.assertions(1);
         try {
             await AcoesBusinessMock.monitora('EEEP30', 35, 50);
-            expect(jest.fn(()=>{services.alertStopMin})).toHaveBeenCalled()
+            expect(jest.fn(()=>{services.notificationStopMin})).toHaveBeenCalled()
         } catch (error: any) {
         }
     })
@@ -37,7 +37,7 @@ describe("Testando o monitoramento", ()=>{
         expect.assertions(1);
         try {
             await AcoesBusinessMock.monitora('EEEP50', 35, 50);
-            expect(jest.fn(()=>{services.alertStopMax})).toHaveBeenCalled()
+            expect(jest.fn(()=>{services.notificationStopMax})).toHaveBeenCalled()
         } catch (error: any) {
         }
     })

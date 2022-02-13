@@ -2,10 +2,10 @@ import BaseError from "../../src/error/BaseError";
 import { IMessageAlertStop, IServices } from "../../src/services/services.Interfaces";
 
 export class ServicesMock implements IServices {
-    async alertStopMin(message: IMessageAlertStop): Promise<boolean>{
+    async notificationStopMin(message: IMessageAlertStop): Promise<boolean>{
         return true
     };
-    async alertStopMax(message: IMessageAlertStop): Promise<boolean>{
+    async notificationStopMax(message: IMessageAlertStop): Promise<boolean>{
         return true
     };
     async queryService(URL: string, symbol: string): Promise<number>{
