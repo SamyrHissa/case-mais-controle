@@ -3,10 +3,11 @@ import { IServices } from "../../services/services.Interfaces";
 import { acoesInterface } from "./Acoes.Business.Iterfaces";
 import dotenv from "dotenv";
 import BaseError from "../../error/BaseError";
+import { requestTime } from "../../utils/setup";
+import { skipPartiallyEmittedExpressions } from "typescript";
+import { sleep } from "../../utils/functions";
 
 dotenv.config();
-
-const queryTime = (1/60)*3; // minutos
 
 export default class AcoesBusiness implements acoesInterface {
     constructor(
@@ -24,14 +25,13 @@ export default class AcoesBusiness implements acoesInterface {
         if (maxPriceValid < minPriceValid){
             throw new BaseError("Preço máximo não pode ser menor que preço mínimo!", 422);
         }
-        let price: undefined | number;
         while(!stop){
-            price = await this.services
+            let price: undefined | number = await this.services
                 .queryService(`https://api.hgbrasil.com/finance/stock_price?key=${process.env.ACCESS_KEY_HGBRASIL}&symbol=${symbol}`, symbol);
+            
             if(!price){
                 throw new BaseError("Symbol não encontrado!", 404);
             }
-            console.log("price",price, price >= maxPrice);
             
             if(price >= maxPrice){
                 stop = await this.services.notificationStopMax({
@@ -39,7 +39,6 @@ export default class AcoesBusiness implements acoesInterface {
                     price,
                     priceEspected: maxPrice
                 });
-                console.log("stop", stop);
                 
             } else if(price <= minPrice) {
                 stop = await this.services.notificationStopMin({
@@ -47,17 +46,18 @@ export default class AcoesBusiness implements acoesInterface {
                     price,
                     priceEspected: minPrice
                 })
-                console.log("stop", stop);
             }
-            stop = true
-            if(!stop){
-                setInterval(()=>{
-                    for(let second = 0; second < (60 * queryTime); second++){
-                        return true
-                    }
-                }, 1000);
+
+            while((minPrice < price) && (price  < maxPrice) && !stop){
+                sleep(1000 * requestTime * 60)
+                price = await this.services
+                .queryService(`https://api.hgbrasil.com/finance/stock_price?key=${process.env.ACCESS_KEY_HGBRASIL}&symbol=${symbol}`, symbol);
+                if(!price){
+                    throw new BaseError("Symbol não encontrado!", 404);
+                }
+                console.log('price', price);
+                
             }
-            
         }
             
     };

@@ -1,0 +1,1 @@
+export const URLServidor = `http://localhost:3003/acoes/monitorar`;

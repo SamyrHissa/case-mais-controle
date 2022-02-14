@@ -9,8 +9,6 @@ export class ServicesMock implements IServices {
         return true
     };
     async queryService(URL: string, symbol: string): Promise<number>{
-        console.log("symbol", symbol);
-        
         switch (symbol) {
             case "EEEP30": 
                 return 30;
@@ -20,7 +18,6 @@ export class ServicesMock implements IServices {
          
             default: 
                 throw new BaseError("Symbol não encontrado!", 404);
-           
         }
     };
 }
