@@ -27,8 +27,7 @@ export const HomePage = () => {
                         };
         console.log("newRequest", newRequest);
         axios
-            .post(`http://localhost:3000/monitorar`)
-            .then((res)=>{})
+            .post(`http://localhost:3000/monitorar`, newRequest)
 
         // requests.createOrder(history, newOrder, clear)
     } 
