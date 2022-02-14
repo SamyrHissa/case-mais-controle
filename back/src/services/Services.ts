@@ -1,5 +1,6 @@
 import axios from "axios";
 import BaseError from "../error/BaseError";
+import { URLWebhook } from "../utils/setup";
 import { IMessageAlertStop, IServices } from "./services.Interfaces";
 
 export class Services implements IServices {
@@ -10,9 +11,7 @@ export class Services implements IServices {
                 price: message.price,
                 message: `A ação ${message.stocks} atingiu o limite mínimo de ${message.priceEspected}`
             }
-            console.log("Post na API Webhook", messageAPI);
-            // const response = await axios.get(
-            //     `https://webhook.site/cfed3ce7-e563-46f7-8709-c7d1be4dad73`);
+            await axios.post(URLWebhook, messageAPI);
             
             return true
         } catch (error) {
@@ -27,9 +26,7 @@ export class Services implements IServices {
                 price: message.price,
                 message: `A ação ${message.stocks} atingiu o limite máximo de ${message.priceEspected}`
             }
-            console.log("Post na API Webhook", messageAPI);
-            // const response = await axios.post(
-            //     `https://webhook.site/cfed3ce7-e563-46f7-8709-c7d1be4dad73`);
+            await axios.post(URLWebhook, messageAPI);
             
             return true
         } catch (error) {
@@ -41,7 +38,6 @@ export class Services implements IServices {
         try {
             const response = await axios.get(URL);
             if((response.data.results[symbol])){
-                
                 return response.data.results[symbol].price
             } else {
                 return undefined
