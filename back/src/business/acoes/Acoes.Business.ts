@@ -24,22 +24,32 @@ export default class AcoesBusiness implements acoesInterface {
         if (maxPriceValid < minPriceValid){
             throw new BaseError("Preço máximo não pode ser menor que preço mínimo!", 422);
         }
+        let price: undefined | number;
         while(!stop){
-            let price = await this.services
+            price = await this.services
                 .queryService(`https://api.hgbrasil.com/finance/stock_price?key=${process.env.ACCESS_KEY_HGBRASIL}&symbol=${symbol}`, symbol);
+            if(!price){
+                throw new BaseError("Symbol não encontrado!", 404);
+            }
+            console.log("price",price, price >= maxPrice);
+            
             if(price >= maxPrice){
                 stop = await this.services.notificationStopMax({
                     stocks: symbol,
                     price,
                     priceEspected: maxPrice
                 });
+                console.log("stop", stop);
+                
             } else if(price <= minPrice) {
                 stop = await this.services.notificationStopMin({
                     stocks: symbol,
                     price,
                     priceEspected: minPrice
                 })
+                console.log("stop", stop);
             }
+            stop = true
             if(!stop){
                 setInterval(()=>{
                     for(let second = 0; second < (60 * queryTime); second++){
