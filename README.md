@@ -13,3 +13,7 @@
                                                     };
 - foi utilizada a porta 3003 local para o listen do app do express.
 - O aplicativo retorna uma mensagem de desativação do monitoramento quando encontra algum erro de consulta ou quando é atingido o valor máximo ou mínimo da ação.
+
+## Front-end
+- Consulta feita na página principal;
+- foi configurada a URL para o post no arquivo "setup.js"
